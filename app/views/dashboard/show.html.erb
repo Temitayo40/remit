@@ -1,0 +1,9 @@
+<% content_for :title, "Today · Remit" %>
+
+<%# Current.user is the logged-in owner, set by the Authentication concern. %>
+<h1 class="text-2xl font-bold">Hello, <%= Current.user.name %></h1>
+<p class="mt-1 text-sm text-gray-600">You're logged in.</p>
+
+<div class="mt-6 rounded-lg border border-dashed border-gray-300 bg-white p-4 text-sm text-gray-600">
+  Next step: add your vehicles and drivers. Your "who hasn't paid today" list will appear here.
+</div>

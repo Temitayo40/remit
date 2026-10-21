@@ -1,0 +1,15 @@
+# Fixtures are inserted straight into the test database, skipping model
+# callbacks, so values must already be in their normalized form.
+<% password_digest = BCrypt::Password.create("password") %>
+
+one:
+  name: Ada Okafor
+  email_address: one@example.com
+  phone: "+2348031234567"
+  password_digest: <%= password_digest %>
+
+two:
+  name: Bayo Adeyemi
+  email_address: two@example.com
+  phone: "+2349051234567"
+  password_digest: <%= password_digest %>

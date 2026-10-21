@@ -1,0 +1,40 @@
+<% content_for :title, "Log in · Remit" %>
+
+<h1 class="text-2xl font-bold">Log in</h1>
+
+<%= form_with url: session_path, class: "mt-6 space-y-5" do |form| %>
+  <%= hidden_field_tag :with, login_method %>
+
+  <% if login_method == "email" %>
+    <div>
+      <%= form.label :email_address, "Email", class: "label" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", class: "input" %>
+    </div>
+  <% else %>
+    <div>
+      <%= form.label :phone, "Phone number", class: "label" %>
+      <%# type="tel" opens the number keypad on phones. %>
+      <%= form.telephone_field :phone, required: true, autofocus: true, autocomplete: "tel",
+            placeholder: "0803 123 4567", class: "input" %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :password, class: "label" %>
+    <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72, class: "input" %>
+  </div>
+
+  <%= form.submit "Log in", class: "btn-primary" %>
+<% end %>
+
+<div class="mt-6 space-y-2 text-sm text-gray-600">
+  <p>
+    <% if login_method == "email" %>
+      <%= link_to "Use phone number instead", new_session_path, class: "link" %>
+    <% else %>
+      <%= link_to "Use email instead", new_session_path(with: "email"), class: "link" %>
+    <% end %>
+  </p>
+  <p><%= link_to "Forgot password?", new_password_path, class: "link" %></p>
+  <p>New to Remit? <%= link_to "Create an account", new_registration_path, class: "link" %></p>
+</div>
