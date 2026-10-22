@@ -1,0 +1,10 @@
+<%# One row in the drivers list (rendered by `render @drivers`). %>
+<%= link_to driver, id: dom_id(driver), class: "flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white p-4 hover:border-emerald-600" do %>
+  <div class="min-w-0">
+    <p class="truncate font-semibold"><%= driver.name %></p>
+    <p class="text-sm text-gray-500"><%= phone_display(driver.phone) %></p>
+  </div>
+  <% unless driver.reminders_enabled? %>
+    <span class="shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">Reminders off</span>
+  <% end %>
+<% end %>

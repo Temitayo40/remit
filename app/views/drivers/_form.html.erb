@@ -1,0 +1,59 @@
+<%= form_with model: driver, class: "space-y-5" do |form| %>
+  <%= render "shared/form_errors", model: driver %>
+
+  <div>
+    <%= form.label :name, class: "label" %>
+    <%= form.text_field :name, required: true, autofocus: driver.new_record?, autocomplete: "off", class: "input" %>
+  </div>
+
+  <div>
+    <%= form.label :phone, "Phone number", class: "label" %>
+    <%# Show "0803 123 4567" rather than "+2348031234567" when editing. %>
+    <%= form.telephone_field :phone, value: phone_display(driver.phone), required: true, autocomplete: "off",
+          placeholder: "0803 123 4567", class: "input" %>
+    <p class="hint">Receipts and reminders will go to this number.</p>
+  </div>
+
+  <fieldset class="space-y-4 rounded-lg border border-gray-200 bg-white p-4">
+    <legend class="px-1 text-sm font-semibold text-gray-700">Guarantor (optional)</legend>
+
+    <div>
+      <%= form.label :guarantor_name, "Name", class: "label" %>
+      <%= form.text_field :guarantor_name, autocomplete: "off", class: "input" %>
+    </div>
+
+    <div>
+      <%= form.label :guarantor_phone, "Phone number", class: "label" %>
+      <%= form.telephone_field :guarantor_phone, value: phone_display(driver.guarantor_phone), autocomplete: "off",
+            class: "input" %>
+    </div>
+  </fieldset>
+
+  <div>
+    <%= form.label :notes, class: "label" %>
+    <%= form.text_area :notes, rows: 3, maxlength: 1000, class: "input" %>
+  </div>
+
+  <div class="flex items-start gap-3">
+    <%= form.check_box :reminders_enabled, class: "mt-1 size-5 accent-emerald-600" %>
+    <div>
+      <%= form.label :reminders_enabled, "Send payment reminders", class: "label" %>
+      <p class="hint">Automatic reminders when a payment is late. Receipts are always sent.</p>
+    </div>
+  </div>
+
+  <% if driver.persisted? %>
+    <div class="flex items-start gap-3">
+      <%= form.check_box :active, class: "mt-1 size-5 accent-emerald-600" %>
+      <div>
+        <%= form.label :active, "Currently driving for you", class: "label" %>
+        <p class="hint">Untick when they stop driving for you. Their history is kept.</p>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="flex flex-col gap-3 sm:flex-row">
+    <%= form.submit driver.new_record? ? "Add driver" : "Save changes", class: "btn-primary" %>
+    <%= link_to "Cancel", driver.new_record? ? drivers_path : driver, class: "btn-secondary" %>
+  </div>
+<% end %>

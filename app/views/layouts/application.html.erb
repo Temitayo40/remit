@@ -34,6 +34,14 @@
                 class: "cursor-pointer text-sm font-medium text-gray-600 hover:text-gray-900" %>
         <% end %>
       </div>
+
+      <% if authenticated? %>
+        <nav class="mx-auto flex max-w-md gap-1 px-3 pb-2">
+          <%= nav_link "Today", root_path %>
+          <%= nav_link "Vehicles", vehicles_path %>
+          <%= nav_link "Drivers", drivers_path %>
+        </nav>
+      <% end %>
     </header>
 
     <main class="mx-auto max-w-md px-4 py-6">

@@ -37,4 +37,14 @@ class PhoneNumberTest < ActiveSupport::TestCase
     assert_not PhoneNumber.valid?("08031234567"), "not normalized"
     assert_not PhoneNumber.valid?(nil)
   end
+
+  test "display formats a normalized number the Nigerian way" do
+    assert_equal "0803 123 4567", PhoneNumber.display("+2348031234567")
+    assert_equal "12345", PhoneNumber.display("12345")
+    assert_equal "", PhoneNumber.display(nil)
+  end
+
+  test "whatsapp_digits drops the plus sign" do
+    assert_equal "2348031234567", PhoneNumber.whatsapp_digits("+2348031234567")
+  end
 end

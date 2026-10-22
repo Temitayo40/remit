@@ -2,18 +2,14 @@ Rails.application.routes.draw do
 
   resource :session                                    
   resource :registration, only: %i[ new create ]        
-  resources :passwords, param: :token     
+  resources :passwords, param: :token
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  #  never deleted, because payment history will point at them.
+  resources :vehicles, except: :destroy
+  resources :drivers, except: :destroy
+
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Inbox for emails sent in development. The gem only exists in the development
-  # group, so this route must never be drawn in test or production.
   mount LetterOpenerWeb::Engine, at: "/letters" if Rails.env.development?
 
   root "dashboard#show"

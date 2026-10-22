@@ -1,0 +1,12 @@
+<%= link_to vehicle, id: dom_id(vehicle), class: "flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white p-4 hover:border-emerald-600" do %>
+  <div class="min-w-0">
+    <p class="truncate font-semibold"><%= vehicle.display_name %></p>
+    <p class="text-sm text-gray-500">
+      <%= vehicle.vehicle_type.humanize %>
+      <% if vehicle.rest_days.any? %> · Rest: <%= vehicle.rest_day_names %><% end %>
+    </p>
+  </div>
+  <p class="shrink-0 text-right text-sm font-semibold">
+    <%= naira(vehicle.rate_kobo) %><span class="font-normal text-gray-500"> / <%= vehicle.daily? ? "day" : "week" %></span>
+  </p>
+<% end %>

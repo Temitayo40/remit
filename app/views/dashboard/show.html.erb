@@ -1,9 +1,19 @@
 <% content_for :title, "Today · Remit" %>
 
-<%# Current.user is the logged-in owner, set by the Authentication concern. %>
+
 <h1 class="text-2xl font-bold">Hello, <%= Current.user.name %></h1>
-<p class="mt-1 text-sm text-gray-600">You're logged in.</p>
+
+<div class="mt-6 grid grid-cols-2 gap-3">
+  <%= link_to vehicles_path, class: "rounded-lg border border-gray-200 bg-white p-4 hover:border-emerald-600" do %>
+    <p class="text-3xl font-bold"><%= Current.user.vehicles.active.count %></p>
+    <p class="text-sm text-gray-600">Vehicles in service</p>
+  <% end %>
+  <%= link_to drivers_path, class: "rounded-lg border border-gray-200 bg-white p-4 hover:border-emerald-600" do %>
+    <p class="text-3xl font-bold"><%= Current.user.drivers.active.count %></p>
+    <p class="text-sm text-gray-600">Active drivers</p>
+  <% end %>
+</div>
 
 <div class="mt-6 rounded-lg border border-dashed border-gray-300 bg-white p-4 text-sm text-gray-600">
-  Next step: add your vehicles and drivers. Your "who hasn't paid today" list will appear here.
+  Next: assign drivers to vehicles. Your "who hasn't paid today" list will appear here.
 </div>

@@ -21,4 +21,17 @@ module PhoneNumber
   def self.valid?(value)
     FORMAT.match?(value.to_s)
   end
+
+  # How Nigerians read a number: "+2348031234567" => "0803 123 4567".
+  def self.display(value)
+    return value.to_s unless valid?(value)
+
+    local = "0#{value.delete_prefix("+234")}"
+    "#{local[0, 4]} #{local[4, 3]} #{local[7, 4]}"
+  end
+
+  # Digits only, as wa.me links expect: "+2348031234567" => "2348031234567".
+  def self.whatsapp_digits(value)
+    value.to_s.delete_prefix("+")
+  end
 end

@@ -1,0 +1,68 @@
+<%= form_with model: vehicle, class: "space-y-5" do |form| %>
+  <%= render "shared/form_errors", model: vehicle %>
+
+  <div>
+    <%= form.label :plate_number, class: "label" %>
+    <%= form.text_field :plate_number, required: true, autofocus: vehicle.new_record?,
+          autocapitalize: "characters", autocomplete: "off", placeholder: "LND 123 AB", class: "input uppercase" %>
+  </div>
+
+  <div>
+    <%= form.label :vehicle_type, class: "label" %>
+    <%= form.select :vehicle_type, Vehicle.vehicle_types.keys.map { |type| [ type.humanize, type ] },
+          { prompt: "Choose…" }, required: true, class: "input" %>
+  </div>
+
+  <div>
+    <%= form.label :nickname, class: "label" %>
+    <%= form.text_field :nickname, placeholder: "e.g. Blue keke", class: "input" %>
+    <p class="hint">Optional. A name that's easier to remember than the plate.</p>
+  </div>
+
+  <div>
+    <%= form.label :rate_naira, "Amount due (₦)", class: "label" %>
+    <%# inputmode="decimal" shows a number keypad but still allows "5,000". %>
+    <%= form.text_field :rate_naira, required: true, inputmode: "decimal", placeholder: "5,000", class: "input" %>
+  </div>
+
+  <fieldset>
+    <legend class="label">How often</legend>
+    <div class="mt-2 flex gap-2">
+      <%= form.collection_radio_buttons :rate_frequency, Vehicle.rate_frequencies.keys, :itself, :humanize do |option| %>
+        <%= option.label class: "flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium has-checked:border-emerald-600 has-checked:bg-emerald-50 has-checked:text-emerald-800" do %>
+          <%= option.radio_button class: "accent-emerald-600" %>
+          <%= option.text %>
+        <% end %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="label">Rest days</legend>
+    <p class="hint">No money is due on these days. Only used for daily remittance.</p>
+    
+    <div class="mt-2 grid grid-cols-7 gap-1">
+      <%= form.collection_check_boxes :rest_days, Vehicle::WEEKDAYS, :itself, ->(wday) { Date::ABBR_DAYNAMES[wday] } do |day| %>
+        <%= day.label class: "flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white text-xs font-medium has-checked:border-emerald-600 has-checked:bg-emerald-600 has-checked:text-white" do %>
+          <%= day.check_box class: "sr-only" %>
+          <%= day.text %>
+        <% end %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <% if vehicle.persisted? %>
+    <div class="flex items-start gap-3">
+      <%= form.check_box :active, class: "mt-1 size-5 accent-emerald-600" %>
+      <div>
+        <%= form.label :active, "In service", class: "label" %>
+        <p class="hint">Untick when the vehicle is sold or off the road. Its history is kept.</p>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="flex flex-col gap-3 sm:flex-row">
+    <%= form.submit vehicle.new_record? ? "Add vehicle" : "Save changes", class: "btn-primary" %>
+    <%= link_to "Cancel", vehicle.new_record? ? vehicles_path : vehicle, class: "btn-secondary" %>
+  </div>
+<% end %>

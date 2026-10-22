@@ -1,0 +1,40 @@
+# `user: one` links to the users.yml fixture named "one" (Rails fills user_id).
+# Values must already be normalized: fixtures skip model code.
+
+keke:
+  user: one
+  plate_number: LND123AB
+  vehicle_type: keke
+  nickname: Blue keke
+  rate_kobo: 500000 # ₦5,000
+  rate_frequency: daily
+  rest_days: [0] # Sunday
+  active: true
+
+bus:
+  user: one
+  plate_number: KJA456CD
+  vehicle_type: bus
+  rate_kobo: 2500000 # ₦25,000
+  rate_frequency: weekly
+  rest_days: []
+  active: true
+
+retired_okada:
+  user: one
+  plate_number: EKY789EF
+  vehicle_type: okada
+  rate_kobo: 300000
+  rate_frequency: daily
+  rest_days: []
+  active: false
+
+# Belongs to the OTHER owner: used to prove owner one can never reach it.
+other_owners_keke:
+  user: two
+  plate_number: ABJ111GH
+  vehicle_type: keke
+  rate_kobo: 450000
+  rate_frequency: daily
+  rest_days: []
+  active: true

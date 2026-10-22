@@ -9,5 +9,5 @@
 # hides guarantor_name, so new fields are covered without editing this list.
 Rails.application.config.filter_parameters += [
   :passw, :email, :secret, :token, :_key, :crypt, :salt, :certificate, :otp, :ssn, :cvv, :cvc,
-  :phone, :name
+  :phone, :name, :notes
 ]

@@ -1,0 +1,31 @@
+emeka:
+  user: one
+  name: Emeka Nwosu
+  phone: "+2348061112222"
+  guarantor_name: Chinedu Nwosu
+  guarantor_phone: "+2348063334444"
+  notes: Prefers to pay in the evening.
+  active: true
+  reminders_enabled: true
+
+musa:
+  user: one
+  name: Musa Bello
+  phone: "+2347035556666"
+  active: true
+  reminders_enabled: false
+
+former:
+  user: one
+  name: Tunde Former
+  phone: "+2349017778888"
+  active: false
+  reminders_enabled: true
+
+# Belongs to the OTHER owner.
+other_owners_driver:
+  user: two
+  name: Sola Other
+  phone: "+2348069990000"
+  active: true
+  reminders_enabled: true

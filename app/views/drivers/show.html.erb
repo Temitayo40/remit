@@ -1,0 +1,49 @@
+<% content_for :title, "#{@driver.name} · Remit" %>
+
+<%= link_to "← Drivers", drivers_path, class: "text-sm text-gray-600 hover:text-gray-900" %>
+
+<div class="mt-2 flex items-start justify-between gap-3">
+  <div class="min-w-0">
+    <h1 class="truncate text-2xl font-bold"><%= @driver.name %></h1>
+    <p class="text-gray-600"><%= phone_display(@driver.phone) %></p>
+  </div>
+  <%= link_to "Edit", edit_driver_path(@driver), class: "btn-secondary w-auto" %>
+</div>
+
+<%# README section 20: WhatsApp first, then a normal call. These are plain
+    links: tel: opens the dialer, wa.me opens a WhatsApp chat. %>
+<div class="mt-4 grid grid-cols-2 gap-3">
+  <%= whatsapp_link @driver.phone, class: "btn-primary" %>
+  <%= call_link @driver.phone, class: "btn-secondary" %>
+</div>
+
+<% unless @driver.active? %>
+  <p class="mt-4 rounded-lg bg-gray-100 px-3 py-2 text-sm text-gray-700">No longer driving for you</p>
+<% end %>
+
+<dl class="mt-6 divide-y divide-gray-200 rounded-lg border border-gray-200 bg-white">
+  <div class="flex items-center justify-between gap-3 p-4">
+    <dt class="text-gray-600">Guarantor</dt>
+    <dd class="text-right font-medium">
+      <% if @driver.guarantor_name || @driver.guarantor_phone %>
+        <%= @driver.guarantor_name %>
+        <% if @driver.guarantor_phone %>
+          <br><%= call_link @driver.guarantor_phone, phone_display(@driver.guarantor_phone), class: "link font-normal" %>
+        <% end %>
+      <% else %>
+        <span class="font-normal text-gray-500">None</span>
+      <% end %>
+    </dd>
+  </div>
+  <div class="flex justify-between p-4">
+    <dt class="text-gray-600">Reminders</dt>
+    <dd class="font-medium"><%= @driver.reminders_enabled? ? "On" : "Off" %></dd>
+  </div>
+  <% if @driver.notes %>
+    <div class="p-4">
+      <dt class="text-gray-600">Notes</dt>
+      <%# simple_format turns line breaks into <br>/<p> and escapes the text (safe against HTML injection). %>
+      <dd class="mt-1 text-sm"><%= simple_format @driver.notes %></dd>
+    </div>
+  <% end %>
+</dl>
